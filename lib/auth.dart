@@ -9,20 +9,23 @@ class Auth{
    Future<void> signInWithEmailAndPassword({
     required String email,
      required String password,
+     required String staffid,
      }) async{
      await _firebaseAuth.signInWithEmailAndPassword(
          email: email,
          password: password,
+        //staffid: staffid,
      );
    }
   Future<void> createUserWithEmailAndPassword({
     required String email,
     required String password,
+    required String staffid,
   }) async{
     await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
-
+        //staffid: staffid,
     );
   }
   Future<void>signOut() async{

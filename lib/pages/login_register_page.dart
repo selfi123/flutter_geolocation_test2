@@ -15,12 +15,14 @@ class _LoginPageState extends State<LoginPage> {
   bool isLogin = true;
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
-
+  final TextEditingController _controllerStaffid = TextEditingController();
   Future<void> signInWithEmailAndPassword() async{
     try{
       await Auth().signInWithEmailAndPassword(
           email: _controllerEmail.text,
-          password: _controllerPassword.text,);
+          password: _controllerPassword.text,
+          staffid: _controllerStaffid.text,
+      );
     }
     on FirebaseAuthException catch (e){
       setState(() {
@@ -32,7 +34,9 @@ class _LoginPageState extends State<LoginPage> {
     try{
       await Auth().createUserWithEmailAndPassword(
         email: _controllerEmail.text,
-        password: _controllerPassword.text,);
+        password: _controllerPassword.text,
+       staffid: _controllerStaffid.text,
+      );
     }
     on FirebaseAuthException catch (e){
       setState(() {
@@ -41,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
   Widget _title(){
-    return const Text('Firebase Auth');
+    return const Text('SNIMS STAFF APP');
 
   }
   Widget _entryField(
@@ -74,23 +78,28 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: _title(),
-
-      ),
+        centerTitle: true,
+        backgroundColor: Colors.orange,
+        foregroundColor: Colors.white,
+        ),
       body: Container(
         height: double.infinity,
         width: double.infinity,
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-         mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
+         // crossAxisAlignment: CrossAxisAlignment.center,
+         //mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          Image.asset('assets/snims.png'),
           _entryField('email', _controllerEmail),
           _entryField('password', _controllerPassword),
+          //_entryField('staffid', _controllerstaffid),
           _errorMessage(),
           _submitButton(),
           _loginOrRegisterButton(),
