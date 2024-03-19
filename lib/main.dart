@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
+/*
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -110,4 +110,4 @@ class _LoginPageState extends State<LoginPage> {
               TextStyle( fontSize: 16, color: Colors.blue[700], ), ), ], ), ), ), ), ), );
   }
 }
-
+*/
