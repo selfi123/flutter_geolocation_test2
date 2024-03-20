@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_geolocation_test2/pages/geolocationpage.dart'; // Import GeolocationApp
+import 'package:flutter_geolocation_test2/pages/userpage.dart';
 
 class DutyTime extends StatefulWidget {
-  const DutyTime({super.key, required this.initialDutyTime, this.onChanged});
+  const DutyTime({Key? key, this.initialDutyTime, this.onChanged}) : super(key: key);
 
-  final String initialDutyTime;
+  final String? initialDutyTime;
   final Function(String?)? onChanged; // Callback function type
 
   @override
@@ -11,12 +13,18 @@ class DutyTime extends StatefulWidget {
 }
 
 class _DutyTimeState extends State<DutyTime> {
-  String? _selectedDutyTime = '';
+  late String? _selectedDutyTime;
+  final GeolocationApp geolocationApp = GeolocationApp();
+  String _currentLocation="";
 
   @override
   void initState() {
     super.initState();
-    _selectedDutyTime = widget.initialDutyTime ?? ""; // Set initial selected time
+    _selectedDutyTime = widget.initialDutyTime;
+  }
+
+  Future<void> _getCurrentLocation() async {
+    await geolocationApp.getCurrentLocation();
   }
 
   @override
@@ -25,7 +33,7 @@ class _DutyTimeState extends State<DutyTime> {
       appBar: AppBar(
         title: const Text("Current Duty Time"),
         centerTitle: true,
-        backgroundColor: Color.fromRGBO(255, 86, 86, 100),
+        backgroundColor: const Color.fromRGBO(255, 86, 86, 100),
         foregroundColor: Colors.white,
       ),
       body: Stack(
@@ -33,9 +41,12 @@ class _DutyTimeState extends State<DutyTime> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/back1.jpg'),
+                image: const AssetImage('assets/back1.jpg'),
                 fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
+                colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.3),
+                  BlendMode.dstATop,
+                ),
               ),
             ),
           ),
@@ -64,9 +75,17 @@ class _DutyTimeState extends State<DutyTime> {
                           });
                         },
                       ),
+
+                      const SizedBox(height: 30),
+                      ElevatedButton(
+                        onPressed: _getCurrentLocation, // Call _getCurrentLocation directly
+                        child: const Text("Get Current Location"),
+                      ),
+
                       const SizedBox(height: 30),
                       ElevatedButton(
                         onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => UserMainPage(selectedDutyTime: _selectedDutyTime)));
                           // Handle form submission (optional, can be removed)
                         },
                         child: const Text("Submit"),

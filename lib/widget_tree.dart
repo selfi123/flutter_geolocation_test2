@@ -1,6 +1,6 @@
 import 'package:flutter_geolocation_test2/auth.dart';
 import 'package:flutter_geolocation_test2/pages/home.dart';
-import 'package:flutter_geolocation_test2/pages/login_register_page.dart';
+import 'package:flutter_geolocation_test2/pages/signinpage.dart';
 import 'package:flutter/material.dart';
 
 class WidgetTree extends StatefulWidget {
@@ -20,7 +20,7 @@ class _WidgetTreeState extends State<WidgetTree> {
 
       }
       else{
-        return const LoginPage();
+        return const SignInPage();
       }
         });
   }

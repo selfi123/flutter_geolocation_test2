@@ -1,9 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_geolocation_test2/pages/dutytime.dart'; // Import DutyTime
 
 class UserMainPage extends StatefulWidget {
-  const UserMainPage({super.key});
+  final String? selectedDutyTime;
+
+  const UserMainPage({Key? key, this.selectedDutyTime}) : super(key: key);
 
   @override
   State<UserMainPage> createState() => _UserMainPageState();
@@ -13,14 +16,15 @@ class _UserMainPageState extends State<UserMainPage> {
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
   String _staffId = "";
-  List<Duty> _duties = [];
   String? _selectedDutyTime;
+  //List<Duty> _duties = [];
 
   @override
   void initState() {
     super.initState();
     _getCurrentUser();
-    _getPostedDuties();
+    _selectedDutyTime = widget.selectedDutyTime;
+    //_getPostedDuties();
   }
 
   Future<void> _getCurrentUser() async {
@@ -32,13 +36,12 @@ class _UserMainPageState extends State<UserMainPage> {
     }
   }
 
-  Future<void> _getPostedDuties() async {
-    // Replace 'duties' with your actual collection name for duties
+  /*Future<void> _getPostedDuties() async {
     final dutiesCollection = await _firestore.collection('duties').get();
     setState(() {
       _duties = dutiesCollection.docs.map((doc) => Duty.fromSnapshot(doc)).toList();
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +58,15 @@ class _UserMainPageState extends State<UserMainPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Logged In Staff ID: $_staffId',
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    'Welcome to the Home Page',
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,
+                    height: 5),
                   ),
                   const SizedBox(height: 10.0),
                   Text(
                     'Selected Duty Time: ${_selectedDutyTime ?? 'Not Selected'}',
-                    style: const TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16,
+                    fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -69,7 +74,7 @@ class _UserMainPageState extends State<UserMainPage> {
 
             // Duty Time widget
             DutyTime(
-              initialDutyTime: _selectedDutyTime  ?? "",
+              initialDutyTime: _selectedDutyTime ?? "",
               onChanged: (newDutyTime) {
                 setState(() {
                   _selectedDutyTime = newDutyTime;
@@ -88,17 +93,17 @@ class _UserMainPageState extends State<UserMainPage> {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10.0),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: _duties.length,
-                    itemBuilder: (context, index) {
-                      final duty = _duties[index];
-                      return Text(
-                        '- ${duty.title} (Due: ${duty.dueDate.toString()})',
-                        style: const TextStyle(fontSize: 14),
-                      );
-                    },
-                  ),
+                  //ListView.builder(
+                  //  shrinkWrap: true,
+                  // itemCount: _duties.length,
+                  // itemBuilder: (context, index) {
+                  // final duty = _duties[index];
+                  // return Text(
+                  // '- ${duty.title} (Due: ${duty.dueDate.toString()})',
+                  // style: const TextStyle(fontSize: 14),
+                  //);
+                  //  },
+                  //),
                 ],
               ),
             ),
