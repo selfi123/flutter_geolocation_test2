@@ -43,27 +43,51 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _title() {
-    return const Text('Sign Up');
+    return Text(
+      'Sign Up',
+      style: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: Colors.orange,
+      ),
+    );
   }
 
   Widget _entryField(String title, TextEditingController controller) {
-    return TextField(
-      controller: controller,
-      obscureText: title == 'Password' || title == 'Confirm Password',
-      decoration: InputDecoration(
-        labelText: title,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: TextField(
+        controller: controller,
+        obscureText: title == 'Password' || title == 'Confirm Password',
+        decoration: InputDecoration(
+          labelText: title,
+          border: OutlineInputBorder(),
+        ),
       ),
     );
   }
 
   Widget _errorMessage() {
-    return Text(errorMessage ?? '');
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Text(
+        errorMessage ?? '',
+        style: TextStyle(color: Colors.red),
+      ),
+    );
   }
 
   Widget _submitButton() {
     return ElevatedButton(
       onPressed: createUserWithEmailAndPassword,
-      child: const Text('Sign Up'),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.orange,
+        padding: EdgeInsets.symmetric(vertical: 15),
+      ),
+      child: Text(
+        'Sign Up',
+        style: TextStyle(fontSize: 18),
+      ),
     );
   }
 
@@ -71,10 +95,16 @@ class _SignUpPageState extends State<SignUpPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        const Text("Already a member?"),
+        Text("Already a member? "),
         TextButton(
           onPressed: navigateToSignInPage,
-          child: const Text('Sign In'),
+          child: Text(
+            'Sign In',
+            style: TextStyle(
+              color: Colors.orange,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ],
     );
