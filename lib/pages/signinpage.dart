@@ -40,27 +40,51 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   Widget _title() {
-    return const Text('Sign In');
+    return Text(
+      'Sign In',
+      style: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: Colors.orange,
+      ),
+    );
   }
 
   Widget _entryField(String title, TextEditingController controller) {
-    return TextField(
-      controller: controller,
-      obscureText: title == 'Password',
-      decoration: InputDecoration(
-        labelText: title,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: TextField(
+        controller: controller,
+        obscureText: title == 'Password',
+        decoration: InputDecoration(
+          labelText: title,
+          border: OutlineInputBorder(),
+        ),
       ),
     );
   }
 
   Widget _errorMessage() {
-    return Text(errorMessage ?? '');
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Text(
+        errorMessage ?? '',
+        style: TextStyle(color: Colors.red),
+      ),
+    );
   }
 
   Widget _submitButton() {
     return ElevatedButton(
       onPressed: signInWithEmailAndPassword,
-      child: const Text('Sign In'),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.orange,
+        padding: EdgeInsets.symmetric(vertical: 15),
+      ),
+      child: Text(
+        'Sign In',
+        style: TextStyle(fontSize: 18),
+      ),
     );
   }
 
@@ -68,14 +92,21 @@ class _SignInPageState extends State<SignInPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        const Text("Not a member?"),
+        Text("Not a member? "),
         TextButton(
           onPressed: navigateToSignUpPage,
-          child: const Text('Register now'),
+          child: Text(
+            'Register now',
+            style: TextStyle(
+              color: Colors.orange,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ],
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
