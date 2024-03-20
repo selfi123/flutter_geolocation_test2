@@ -33,71 +33,72 @@ class _DutyTimeState extends State<DutyTime> {
       appBar: AppBar(
         title: const Text("Current Duty Time"),
         centerTitle: true,
-        backgroundColor: const Color.fromRGBO(255, 86, 86, 100),
-        foregroundColor: Colors.white,
+        backgroundColor: Colors.red, // Change the background color
       ),
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: const AssetImage('assets/back1.jpg'),
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.3),
-                  BlendMode.dstATop,
-                ),
-              ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: const AssetImage('assets/back1.jpg'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.3),
+              BlendMode.dstATop,
             ),
           ),
-          Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Form(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text('Please select your duty time:', style: TextStyle(fontSize: 20)),
-                      const SizedBox(height: 20),
-                      DropdownButton<String>(
-                        value: _selectedDutyTime,
-                        items: const [
-                          DropdownMenuItem(value: 't1(6.00 am)', child: Text('t1(6.00 am)')),
-                          DropdownMenuItem(value: 't2(8.00 am)', child: Text('t2(8.00 am)')),
-                          DropdownMenuItem(value: 't3(9.30 am)', child: Text('t3(9.30 am)')),
-                        ],
-                        hint: const Text('Select Duty Time'),
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedDutyTime = value;
-                            widget.onChanged?.call(value); // Call callback if provided
-                          });
-                        },
-                      ),
-
-                      const SizedBox(height: 30),
-                      ElevatedButton(
-                        onPressed: _getCurrentLocation, // Call _getCurrentLocation directly
-                        child: const Text("Get Current Location"),
-                      ),
-
-                      const SizedBox(height: 30),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => UserMainPage(selectedDutyTime: _selectedDutyTime)));
-                          // Handle form submission (optional, can be removed)
-                        },
-                        child: const Text("Submit"),
-                      ),
-                    ],
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch, // Make children stretch horizontally
+                children: [
+                  const Text(
+                    'Please select your duty time:',
+                    style: TextStyle(fontSize: 20, color: Colors.black,
+                    fontWeight: FontWeight.bold), // Change text color
+                    textAlign: TextAlign.center, // Center-align the text
                   ),
-                ),
+                  const SizedBox(height: 20),
+                  DropdownButton<String>(
+                    value: _selectedDutyTime,
+                    items: const [
+                      DropdownMenuItem(value: 't1(6.00 am)', child: Text('t1(6.00 am)')),
+                      DropdownMenuItem(value: 't2(8.00 am)', child: Text('t2(8.00 am)')),
+                      DropdownMenuItem(value: 't3(9.30 am)', child: Text('t3(9.30 am)')),
+                    ],
+
+                    hint: const Text('Select Duty Time', style: TextStyle(color: Colors.white)), // Change hint text color
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedDutyTime = value;
+                        widget.onChanged?.call(value); // Call callback if provided
+                      });
+                    },
+
+                  ),
+                  const SizedBox(height: 30),
+                  ElevatedButton(
+                    onPressed: _getCurrentLocation,
+                    child: const Text("Get Current Location"),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => UserMainPage(selectedDutyTime: _selectedDutyTime)));
+                      // Handle form submission (optional, can be removed)
+                    },
+                    child: const Text("Submit"),
+                  ),
+                ],
               ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }
+
 }
+

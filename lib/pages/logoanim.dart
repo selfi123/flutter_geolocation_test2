@@ -1,12 +1,8 @@
 import 'package:flutter_geolocation_test2/pages/dutytime.dart';
-import 'package:flutter_geolocation_test2/pages/signinpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_geolocation_test2/pages/geolocationpage.dart';
 import 'dart:async';
-import 'package:flutter_geolocation_test2/pages/signinpage.dart';
 import 'package:flutter_geolocation_test2/pages/signuppage.dart';
-import 'package:flutter_geolocation_test2/pages/userpage.dart';
 
 
 
