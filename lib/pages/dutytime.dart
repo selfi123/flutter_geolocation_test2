@@ -29,7 +29,9 @@ class _DutyTimeState extends State<DutyTime> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Container(
+        constraints: BoxConstraints(maxWidth: 379.4, maxHeight: double.infinity),
+    child:  Scaffold(
       appBar: AppBar(
         title: const Text("Current Duty Time"),
         centerTitle: true,
@@ -79,24 +81,85 @@ class _DutyTimeState extends State<DutyTime> {
 
                   ),
                   const SizedBox(height: 30),
-                  ElevatedButton(
+                 /* ElevatedButton(
                     onPressed: _getCurrentLocation,
                     child: const Text("Get Current Location"),
-                  ),
+                  ),*/
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => UserMainPage(selectedDutyTime: _selectedDutyTime)));
-                      // Handle form submission (optional, can be removed)
+                      if (_selectedDutyTime == null) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text('Error'),
+                              content: Text('Please select a duty time.'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => UserMainPage(selectedDutyTime: _selectedDutyTime)),
+                        );
+                      }
                     },
                     child: const Text("Submit"),
                   ),
+
                 ],
               ),
             ),
           ),
         ),
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text('Home'),
+              onTap: () {
+                // Handle tap on home menu item
+              },
+            ),
+            ListTile(
+              title: Text('About'),
+              onTap: () {
+                // Handle tap on about menu item
+              },
+            ),
+            ListTile(
+              title: Text('Logout'),
+              onTap: () {
+                // Handle tap on logout menu item
+              },
+            ),
+          ],
+        ),
+      ),
+    ),
     );
   }
 

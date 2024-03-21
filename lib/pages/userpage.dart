@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_geolocation_test2/pages/dutytime.dart'; // Import DutyTime
+import 'package:flutter_geolocation_test2/pages/dutytime.dart';
+import 'package:flutter_geolocation_test2/pages/signinpage.dart'; // Import DutyTime
 
 class UserMainPage extends StatefulWidget {
   final String? selectedDutyTime;
@@ -29,11 +30,14 @@ class _UserMainPageState extends State<UserMainPage> {
     final user = _auth.currentUser;
     if (user != null) {
       setState(() {
-        _staffId = user.uid;
+        _staffId = user.email.toString().split('@').first;
       });
     }
   }
-
+  Future<void> signOut() async{
+    await _auth.signOut();
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>SignInPage()));
+  }
   /*Future<void> _getPostedDuties() async {
     final dutiesCollection = await _firestore.collection('duties').get();
     setState(() {
@@ -83,6 +87,50 @@ class _UserMainPageState extends State<UserMainPage> {
         ),
 
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text('Home'),
+              onTap: () {
+                // Handle tap on Home menu item
+                // For example, navigate to another page
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+            ListTile(
+              title: Text('About'),
+              onTap: () {
+                // Handle tap on About menu item
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+            ListTile(
+              title: Text('Logout'),
+              onTap: () {
+                // Handle tap on Logout menu item
+                // For example, sign out the user
+                signOut();
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+          ],
+        ),
+      ),
+
     );
   }
 }
